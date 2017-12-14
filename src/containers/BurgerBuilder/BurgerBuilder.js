@@ -108,7 +108,8 @@ class BurgerBuilder extends React.Component {
 				{/*modal passes props down to backdrop and setState with purchasing to toggle*/}
 				<Modal show={this.state.purchasing} modalClose={this.purchaseCancelHandler}>
 					<OrderSummary ingredients={this.state.ingredients} cancel={this.purchaseCancelHandler}
-					continue={this.purchaseContinueHandler}/>
+					continue={this.purchaseContinueHandler}
+					price={this.state.totalPrice}/>
 				</Modal>
 				<Burger ingredients={this.state.ingredients} />
 				<BuildControls 
