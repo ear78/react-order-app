@@ -14,3 +14,7 @@
 .Toolbar nav {
     height: 100%;
 }
+
+.Hamburger {
+    cursor: pointer;
+}
