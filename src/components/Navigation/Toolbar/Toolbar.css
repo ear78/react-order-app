@@ -18,3 +18,7 @@
 .Hamburger {
     cursor: pointer;
 }
+
+.Hamburger i {
+    color: white;
+}
