@@ -7,7 +7,7 @@ const orderSummary = (props) => {
     .map(igKey => {
         return <li key={igKey}><span style={{textTransform: 'capitalize'}}>{igKey}</span>: {props.ingredients[igKey]}</li>
     });
-    
+
     return (
         <Aux>
             <h3>Your Order</h3>
@@ -17,8 +17,8 @@ const orderSummary = (props) => {
             </ul>
             <p><strong>Total Price: {props.price.toFixed(2)}</strong></p>
             <p>Continue to Checkout</p>
-            <Button btntype="Danger" clicked={props.cancel}>CANCEL</Button>
-            <Button btntype="Success" clicked={props.continue}>CONTINUE</Button>
+            <Button btnType="Danger" clicked={props.cancel}>CANCEL</Button>
+            <Button btnType="Success" clicked={props.continue}>CONTINUE</Button>
         </Aux>
     )
 }

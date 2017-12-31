@@ -14,9 +14,21 @@ class Checkout extends React.Component {
             }
         }
     }
+
+    checkoutCancelledHandler = () => {
+        //takes us back to previous page when cancelled
+        this.props.history.goBack();
+    }
+
+    checkoutContinueHandler = () => {
+        //this will replace the path with contact-data component to continue order
+        this.props.history.replace('/checkout/contact-data');
+    }
     render(){
         return(
-            <CheckoutSummary ingredients={this.state.ingredients} />
+            <CheckoutSummary
+                checkoutCancelled={this.checkoutCancelled}
+                checkoutContinue={this.checkoutContinued} ingredients={this.state.ingredients} />
         )
     }
 }
