@@ -131,8 +131,16 @@ class BurgerBuilder extends React.Component {
 		// 	.catch(error => {
 		// 		this.setState({ loading: false, purchasing: false })
 		// 	});
-		//onclick routing to checkout page when continue is clicked
-		this.props.history.push('/checkout');
+		const queryParams = [];
+		for(let i in this.state.ingredients) {
+			queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+		}
+		const queryString = queryParams.join('&');
+		//onclick routing to checkout page when continue is clicked, configures a query string
+		this.props.history.push({
+			pathname: '/checkout',
+			search: '?' + queryString
+		})
 	}
 
 	render() {
