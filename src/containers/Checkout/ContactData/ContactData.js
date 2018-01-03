@@ -10,11 +10,57 @@ class ContactData extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            name: '',
-            email: '',
-            address: {
-                street: '',
-                postalCode: ''
+            orderForm: {
+                name: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'Your Name'
+                    },
+                    value: ''
+                },
+                email: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'Your Email'
+                    },
+                    value: ''
+                },
+                street: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'Your Street Address'
+                    },
+                    value: ''
+                },
+                zipCode: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'Your Zip Code'
+                    },
+                    value: ''
+                },
+                deliveryMethod: {
+                    elementType: 'select',
+                    elementConfig: {
+                        options: [
+                            {value: 'fastest', displayValue: 'Fastest'},
+                            {value: 'cheapest', displayValue: 'Cheapest'}
+                        ]
+                    },
+                    value: ''
+                },
+                country: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'Your Country'
+                    },
+                    value: ''
+                }
             },
             loading: false
         }
@@ -29,15 +75,15 @@ class ContactData extends React.Component {
         	ingredients: this.props.ingredients,
         	price: this.props.price,
         	customer: {
-        		name: 'Elliot',
-        		address: {
-        			street: 'Test Street 1',
-        			zipCode: '54433',
-        			country: 'Germany'
-        		},
-        		email: 'test@test.com'
-        	},
-        	deliveryMethod: 'Fastest'
+        		// name: 'Elliot',
+        		// address: {
+        		// 	street: 'Test Street 1',
+        		// 	zipCode: '54433',
+        		// 	country: 'Germany'
+        		// },
+        		// email: 'test@test.com'
+        	}
+        	// deliveryMethod: 'Fastest'
         }
         axios.post('/orders.json', order)
         	.then(response => {
@@ -50,12 +96,21 @@ class ContactData extends React.Component {
         	});
     }
     render(){
+        const formElementsArray = [];
+        for(let key in this.state.orderForm){
+            formElementsArray.push({
+                id: key,
+                config: this.state.orderForm[key]
+            })
+        }
         let form = (
             <form>
-                <Input inputtype="input" type="text" name="name" placeholder="Your Name" />
-                <Input inputtype="input" type="email" name="email" placeholder="Your Email" />
-                <Input inputtype="input" type="text" name="street" placeholder="Street" />
-                <Input inputtype="input" type="text" name="postal" placeholder="Postal Code" />
+
+                {formElementsArray.map(formElement => (
+                    <Input
+                        key={formElement.id}
+                        elementType={formElement.config.elementType} elementConfig={formElement.config.elementConfig} value={formElement.config.value}/>
+                ))}
                 <Button className={classes.Input} btnType="Success" clicked={this.orderHandler}>ORDER</Button>
             </form>
         );
