@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Aux from '../../hoc/Aux';
 import Burger from '../../components/Burger/Burger';
@@ -7,6 +8,7 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import * as actionTypes from '../../store/actions';
 
 const INGREDIENT_PRICES = {
 	salad: 0.5,
@@ -19,12 +21,12 @@ class BurgerBuilder extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			ingredients: {
-				salad: 0,
-				bacon: 0,
-				cheese: 0,
-				meat: 0
-			},
+			// ingredients: {
+			// 	salad: 0,
+			// 	bacon: 0,
+			// 	cheese: 0,
+			// 	meat: 0
+			// },
 			totalPrice: 4,
 			purchaseable: false,
 			purchasing: false,
@@ -35,11 +37,11 @@ class BurgerBuilder extends React.Component {
 
 	componentDidMount() {
 		console.log(this.props);
-		axios.get('/ingredients.json').then((response) => {
-			this.setState({ingredients: response.data})
-		}).catch(error => {
-			this.setState({error: true})
-		})
+		// axios.get('/ingredients.json').then((response) => {
+		// 	this.setState({ingredients: response.data})
+		// }).catch(error => {
+		// 	this.setState({error: true})
+		// })
 	}
 
 	updatePurchaseState = (ingredients) => {
@@ -123,25 +125,25 @@ class BurgerBuilder extends React.Component {
 
 	render() {
 		const disabledInfo = {
-			...this.state.ingredients
+			...this.props.ings
 		};
 		for(let key in disabledInfo){
 			disabledInfo[key] = disabledInfo[key] <= 0;
 		}
 		// conditionally setting order summary
-		let orderSummary = <OrderSummary ingredients={this.state.ingredients} cancel={this.purchaseCancelHandler}
+		let orderSummary = <OrderSummary ingredients={this.props.ings} cancel={this.purchaseCancelHandler}
 		continue={this.purchaseContinueHandler}
 		price={this.state.totalPrice}/>;
 
 	let burger = this.state.error ? <p>Ingredients can't be loaded</p> : <Spinner />;
 
-		if(this.state.ingredients){
+if(this.props.ings){
 			burger = (
 				<Aux>
-					<Burger ingredients={this.state.ingredients} />
+					<Burger ingredients={this.props.ings} />
 					<BuildControls
-					ingredientAdded={this.addIngredientHandler}
-					ingredientRemove={this.removeIngredientHandler}
+					ingredientAdded={this.props.onIngredientAdded}
+					ingredientRemove={this.props.onIngredientRemoved}
 					disabled={disabledInfo}
 					purchaseable={this.state.purchaseable}
 					price={this.state.totalPrice}
@@ -166,4 +168,15 @@ class BurgerBuilder extends React.Component {
 	}
 }
 
-export default BurgerBuilder;
+const mapStateToProps = state => {
+	ings: state.ingredients
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onIngredientAdded: (ingName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: ingName}),
+        onIngredientRemoved: (ingName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingName})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder);
