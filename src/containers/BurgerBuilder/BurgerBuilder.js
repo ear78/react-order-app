@@ -169,7 +169,9 @@ if(this.props.ings){
 }
 
 const mapStateToProps = state => {
-	ings: state.ingredients
+	return {
+		ings: state.ingredients
+	}
 }
 
 const mapDispatchToProps = dispatch => {
