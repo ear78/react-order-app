@@ -10,24 +10,11 @@ import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import * as actionTypes from '../../store/actions';
 
-const INGREDIENT_PRICES = {
-	salad: 0.5,
-	cheese: 0.4,
-	meat: 1.3,
-	bacon: 0.7
-};
 
 class BurgerBuilder extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// ingredients: {
-			// 	salad: 0,
-			// 	bacon: 0,
-			// 	cheese: 0,
-			// 	meat: 0
-			// },
-			totalPrice: 4,
 			purchaseable: false,
 			purchasing: false,
 			loading: false,
@@ -56,47 +43,6 @@ class BurgerBuilder extends React.Component {
 		this.setState({
 			purchaseable: sum > 0
 		})
-	}
-
-	addIngredientHandler = (type) => {
-		const oldCount = this.state.ingredients[type];
-		const updatedCount = oldCount + 1;
-		const updatedIngredients = {
-			...this.state.ingredients
-		};
-		updatedIngredients[type] = updatedCount;
-
-		const priceAddition = INGREDIENT_PRICES[type];
-		const oldPrice = this.state.totalPrice;
-		const newPrice = oldPrice + priceAddition;
-
-		this.setState({
-			totalPrice: newPrice,
-			ingredients: updatedIngredients
-		});
-		this.updatePurchaseState(updatedIngredients);
-	}
-
-	removeIngredientHandler = (type) => {
-		const oldCount = this.state.ingredients[type];
-		if(oldCount <= 0){
-			return;
-		}
-		const updatedCount = oldCount - 1;
-		const updatedIngredients = {
-			...this.state.ingredients
-		};
-		updatedIngredients[type] = updatedCount;
-
-		const priceDeduction = INGREDIENT_PRICES[type];
-		const oldPrice = this.state.totalPrice;
-		const newPrice = oldPrice - priceDeduction;
-
-		this.setState({
-			totalPrice: newPrice,
-			ingredients: updatedIngredients
-		});
-		this.updatePurchaseState(updatedIngredients);
 	}
 
 	purchaseHandler = () => {
@@ -133,7 +79,7 @@ class BurgerBuilder extends React.Component {
 		// conditionally setting order summary
 		let orderSummary = <OrderSummary ingredients={this.props.ings} cancel={this.purchaseCancelHandler}
 		continue={this.purchaseContinueHandler}
-		price={this.state.totalPrice}/>;
+		price={this.props.price}/>;
 
 	let burger = this.state.error ? <p>Ingredients can't be loaded</p> : <Spinner />;
 
@@ -146,7 +92,7 @@ if(this.props.ings){
 					ingredientRemove={this.props.onIngredientRemoved}
 					disabled={disabledInfo}
 					purchaseable={this.state.purchaseable}
-					price={this.state.totalPrice}
+					price={this.props.price}
 					ordered={this.purchaseHandler}
 					/>
 				</Aux>
@@ -170,7 +116,8 @@ if(this.props.ings){
 
 const mapStateToProps = state => {
 	return {
-		ings: state.ingredients
+		ings: state.ingredients,
+		price: state.totalPrice
 	}
 }
 
