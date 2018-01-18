@@ -63,16 +63,12 @@ class ContactData extends React.Component {
                     },
                     value: ''
                 }
-            },
-            loading: false
+            }
         }
     }
 
     orderHandler = (event) => {
         event.preventDefault();
-        // this.setState({
-        // 	loading: true
-        // });
         const formData = {};
         for(let formElementIdentifier in this.state.orderForm){
             formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
@@ -82,7 +78,7 @@ class ContactData extends React.Component {
         	price: this.props.price,
             orderData: formData
         }
-
+        //dispatch actions always received as props
         this.props.onOrderBurger(order)
     }
 
@@ -115,7 +111,7 @@ class ContactData extends React.Component {
                 <Button className={classes.Input} btnType="Success" clicked={this.orderHandler}>ORDER</Button>
             </form>
         );
-        if(this.state.loading){
+        if(this.props.loading){
             form = <Spinner />
         }
         return(
@@ -132,12 +128,15 @@ class ContactData extends React.Component {
 const mapStateToProps = state => {
     return {
         ings: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        loading: state.loading
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    onOrderBurger: (orderData) => dispatch(actions.purchaseBurgerStart(orderData))
+    return {
+        onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData))
+    }
 }
 
-export default connect(mapStateToProps)(ContactData);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactData);
