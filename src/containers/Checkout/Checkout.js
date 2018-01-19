@@ -8,7 +8,6 @@ import * as actions from '../../store/actions/index';
 
 class Checkout extends React.Component {
 
-
     checkoutCancelledHandler = () => {
         //takes us back to previous page when cancelled
         this.props.history.goBack();
@@ -40,7 +39,8 @@ class Checkout extends React.Component {
 const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        purchased: state.order.purchased
     }
 }
 

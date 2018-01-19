@@ -48,6 +48,7 @@ class BurgerBuilder extends React.Component {
 
 	purchaseContinueHandler = () => {
 		//onclick routing to checkout page when continue is clicked, configures a query string
+		this.props.onInitPurchase();
 		this.props.history.push('/checkout');
 	}
 
@@ -107,6 +108,9 @@ const mapDispatchToProps = dispatch => {
         onIngredientRemoved: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName)),
 		onInitIngredients: () => {
 			dispatch(burgerBuilderActions.initIngredients())
+		},
+		onInitPurchase: () => {
+			dispatch(burgerBuilderActions.purchaseInit())
 		}
     }
 }
