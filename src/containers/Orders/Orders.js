@@ -8,10 +8,10 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 class Orders extends React.Component {
     constructor(props){
         super(props);
-        this.state = {
-            orders: [],
-            loading: true
-        }
+        // this.state = {
+        //     orders: [],
+        //     loading: true
+        // }
     }
     componentDidMount(){
         this.props.onFetchOrders();
@@ -39,7 +39,8 @@ class Orders extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        orders: state.order.orders
+        orders: state.order.orders,
+        loading: state.order.loading
     }
 }
 
