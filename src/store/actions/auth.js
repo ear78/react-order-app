@@ -33,7 +33,7 @@ export const auth = (email, password) => {
         axios.post("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDiRgSX79NCGDHzBDap1Rjs87o1KUvIQHs", authData)
         .then(response => {
             console.log(response);
-            // dispatch(authSuccess(response.data));
+            dispatch(authSuccess(response.data));
         })
         .catch(err => {
             console.log(err);

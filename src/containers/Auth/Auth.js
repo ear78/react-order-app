@@ -27,7 +27,8 @@ class Auth extends React.Component{
                     },
                     value: ''
                 }
-            }
+            },
+            isSignup: true
         }
     }
 
@@ -50,7 +51,12 @@ class Auth extends React.Component{
         event.preventDefault();
         this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value);
     }
-    
+
+    switchAuthModeHandler = () => {
+        this.setState(prevState => {
+            return {isSignup: !prevState.isSignup}
+        })
+    }
     render(){
         const formElementsArray = [];
         for(let key in this.state.controls){
@@ -73,6 +79,7 @@ class Auth extends React.Component{
                     {form}
                     <Button btnType='Success'>SUBMIT</Button>
                 </form>
+                <Button btnType="Danger">Switch To Signin</Button>
             </div>
         )
     }
