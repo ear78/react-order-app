@@ -12,3 +12,10 @@
         width: 500px;
     }
 }
+
+.Error {
+    color: #fff;
+    background: tomato;
+    border-radius: 3px;
+    padding: 5px 0;
+}
