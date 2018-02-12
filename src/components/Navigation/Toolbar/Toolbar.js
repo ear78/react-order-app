@@ -9,11 +9,11 @@ const toolbar = (props) => {
             <div className={classes.Hamburger} onClick={props.clicked}><i className="material-icons">apps</i></div>
             <Logo />
             <nav>
-                <NavigationItems />
+                <NavigationItems isAuthenticated={props.isAuth}/>
             </nav>
         </header>
     )
-    
+
 }
 
 export default toolbar;
