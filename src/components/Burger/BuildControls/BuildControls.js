@@ -15,14 +15,14 @@ const buildControls = ( props ) => {
         {/*passed in with props and state*/}
         <p>Current Price: <strong>{props.price.toFixed(2)}</strong></p>
             {controls.map(ctrl => (
-                <BuildControl 
-                key={ctrl.label} label={ctrl.label} 
+                <BuildControl
+                key={ctrl.label} label={ctrl.label}
                 added={() => props.ingredientAdded(ctrl.type)}
                 removed={()=> props.ingredientRemove(ctrl.type)}
                 disabled={props.disabled[ctrl.type]}/>
             ))}
             <button className={classes.OrderButton} disabled={!props.purchaseable}
-            onClick={props.ordered}>ORDER NOW</button>
+            onClick={props.ordered}>{props.isAuth ? 'ORDER NOW' : 'Sign Up To Order'}</button>
         </div>
     )
 }
