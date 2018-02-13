@@ -121,7 +121,7 @@ const mapDispatchToProps = dispatch => {
 			dispatch(burgerBuilderActions.purchaseInit())
 		},
 		onSetAuthRedirectPath: (path) => {
-			dispatch(burgerBuilderActions.setAuthRedirectPath())
+			dispatch(burgerBuilderActions.setAuthRedirectPath(path))
 		}
     }
 }
