@@ -15,6 +15,7 @@ class App extends Component {
 		this.props.onTryAutoSignup();
 	}
 
+	// route guards for auth users and un authed users
 	render() {
 		let routes = (
 			<Switch>
@@ -29,6 +30,7 @@ class App extends Component {
 					<Route path="/checkout" component={Checkout} />
 					<Route path="/orders" component={Orders} />
 					<Route path="/logout" component={Logout} />
+					<Route path="/" exact component={BurgerBuilder} />
 					<Redirect to="/" />
 				</Switch>
 			)
